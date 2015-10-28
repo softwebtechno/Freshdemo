@@ -29,6 +29,20 @@
         <!-- normalizes device and document ready events, see file for details -->
         <script type="application/javascript" src="lib/jquery.min.js"></script>
         <script type="application/javascript" src="jqm/jquery.mobile-min.js" data-ver="0"></script>
+        <script language="javascript" type="text/javascript">
+			$(document).on( "pagecreate", function() {
+$( document ).on( "swiperight", function( e ) {
+			if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
+				if ( e.type === "swiperight" ) {
+					$( ".left-panel" ).panel( "open" );
+				}
+       		 }
+    		});
+			});	
+			$(document).ready(function(e) {
+   				 loadcategory();
+			});
+        </script>
     </head>
 
 <body>

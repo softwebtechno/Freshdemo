@@ -16,7 +16,7 @@
 //     "use strict" ;
 // // ...event handler code here...
 // }
-$(document).on( "pagecreate", function() {
+/*$(document).on( "pagecreate", function() {
 $( document ).on( "swiperight", function( e ) {
 			if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
 				if ( e.type === "swiperight" ) {
@@ -25,10 +25,9 @@ $( document ).on( "swiperight", function( e ) {
        		 }
     	});
 });
+*/
 
-$(document).ready(function(e) {
-    loadcategory();
-});
+
 
 // ...additional event handlers here...
 function testajax(){
@@ -48,7 +47,9 @@ function testajax(){
 }
 
 function loadcategory(){
-    $.ajax({
+    var i =1;
+	var Category = ""; 
+	$.ajax({
         type: "POST",
         url: 'http://softwebtechno.com/getcategory.php',
         dataType: 'json',
