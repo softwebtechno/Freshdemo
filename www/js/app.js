@@ -18,12 +18,16 @@
 // }
 $(document).on( "pagecreate", function() {
 $( document ).on( "swiperight", function( e ) {
-        if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
-            if ( e.type === "swiperight" ) {
-                $( ".left-panel" ).panel( "open" );
-            }
-        }
+			if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
+				if ( e.type === "swiperight" ) {
+					$( ".left-panel" ).panel( "open" );
+				}
+       		 }
     	});
+});
+
+$(document).ready(function(e) {
+    loadcategory();
 });
 
 // ...additional event handlers here...
@@ -40,7 +44,41 @@ function testajax(){
         success: function (response) {
 			alert(JSON.stringify(response));     
 		}
-});
+	});
+}
+
+function loadcategory(){
+    $.ajax({
+        type: "POST",
+        url: 'http://softwebtechno.com/getcategory.php',
+        dataType: 'json',
+		cache:false,
+        crossDomain: true,
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('new textStatus=' + textStatus + ' errorThrown=' + errorThrown);
+        },
+        success: function (response) {
+			if (response.length > 0)
+				   {
+					  $.each(response, function(index, element) {
+						  if(parseInt(i)%2==0)
+						  {
+						  	Category += "<div class='ui-block-b'>";
+						  }
+						  else
+						  {
+							  Category += "<div class='ui-block-a'>";
+						  }
+						  Category += "<a  href='#shopproductpage' class='ui-bar ui-bar-a ClickCategory' data-corners='false' title=' "+ element["catname"] +" ' data-value='"+element["catid"]+"'  data-transition='flip' data-role='button' role='button'> "+element["catname"]+" </a></div>";
+						  i=i+1;
+						  //alert(element["catid"]+" "+element["catname"]);           
+					  });
+				   }
+				   $("#CategoryGrid").html(Category);    
+		}
+	});
+}
+
 
 /*	$.ajax({
         type:'POST',
@@ -55,4 +93,3 @@ function testajax(){
         }
     });
 */
-}
