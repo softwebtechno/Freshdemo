@@ -46,6 +46,7 @@ function testajax(){
 	});
 }
 
+/* For Load Category */
 function loadcategory(){
     var i =1;
 	var Category = ""; 
@@ -70,7 +71,7 @@ function loadcategory(){
 						  {
 							  Category += "<div class='ui-block-a'>";
 						  }
-						  Category += "<a  href='#shopproductpage' class='ui-bar ui-bar-a ClickCategory' data-corners='false' title=' "+ element["catname"] +" ' data-value='"+element["catid"]+"'  data-transition='flip' data-role='button' role='button'> "+element["catname"]+" </a></div>";
+						  Category += "<a  href='#shopproductpage' class='ui-bar ui-bar-a ClickCategory' data-corners='false' title=' "+ element["catname"] +" ' data-value='"+element["catid"]+"' onclick='LoadProducts("+element["catid"]+")'  data-transition='flip' data-role='button' role='button'> "+element["catname"]+" </a></div>";
 						  i=i+1;
 						  //alert(element["catid"]+" "+element["catname"]);           
 					  });
@@ -80,6 +81,35 @@ function loadcategory(){
 	});
 }
 
+/* For Load Products from Category */
+function LoadProducts(CatId){
+	var Products = "";
+	var i=1;
+    $.ajax({
+        type: "POST",
+        url: 'http://softwebtechno.com/getproducts.php',
+		data:{catId:CatId},
+        dataType: 'json',
+		cache:false,
+        crossDomain: true,
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('new textStatus=' + textStatus + ' errorThrown=' + errorThrown);
+        },
+        success: function (response) {
+			//alert(response);
+				 if (response.length > 0)
+				   {
+					  $.each(response, function(index, element) {
+					  Products += '<div class="panel100 productEffect"><div class="panel20"><a href="#DataDynamic" class="ui-bar ui-bar-a NoPadding ImageDiv MyBackground" data-corners="false" title=" Navigation " data-value="'+element["prodid"]+'" role="button"><img src="icon.png" /></a></div><div class="panel55"><a href="#DataDynamic" class="ui-bar ui-bar-a NoPadding NoBorder fontLeft MyBackground" data-corners="false" title=" Navigation " data-value="'+element["prodid"]+'" style="margin-bottom:0px;" role="button"> '+element["proname"]+' </a><a class="ui-bar ui-bar-a NoPadding fontLeft NoBorder MyBackground" style="margin-top:0px;" data-corners="false" title=" Price per Quote " data-value="'+element["price"]+'" role="button" id="cost1'+element["prodid"]+'">Price : Rs. '+element["price"]+'</a></div><div class="panel25"><a class="ui-btn-center ui-btn-corner-all ui-btn panel10 ui-icon-plus ui-btn-icon-notext ui-shadow IncreseQty" title=" Increase Quantity " data-form="ui-icon" data-role="button" role="button" data-transition="pop" data-itemvalue="'+element["prodid"]+'"> + </a><div class="panel10"><a class="ui-bar ui-bar-a NoPadding fontLeft NoBorder MyBackground" style="margin-bottom:0px;" data-corners="false" title=" Quantity " data-value="'+element["prodid"]+'" role="button" id="Count'+element["prodid"]+'">'+element["Qty"]+'</a></div><a class="ui-btn-center ui-btn-corner-all ui-btn panel10 ui-icon-minus ui-btn-icon-notext ui-shadow DecreseQty" title=" Decrease Quantity " data-form="ui-icon" data-role="button" role="button" data-transition="pop"  data-itemvalue="'+element["prodid"]+'"> - </a><div><a class="ui-bar ui-bar-a NoPadding fontLeft NoBorder MyBackground" style="margin-top:0px;" data-corners="false" title=" Price per Quote " data-value="'+element["price"]+'" role="button" id="cost'+element["prodid"]+'"> Rs. '+element["subTotal"]+'</a></div></div></div>';
+						  i=i+1;
+						  //alert(element["catid"]+" "+element["catname"]);           
+					  });
+				   }
+				   $("#ProductsGrid").html(Products);
+				   //GenerateEvent();    
+		}
+	});
+}
 
 /*	$.ajax({
         type:'POST',

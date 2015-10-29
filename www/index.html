@@ -31,16 +31,17 @@
         <script type="application/javascript" src="jqm/jquery.mobile-min.js" data-ver="0"></script>
         <script language="javascript" type="text/javascript">
 			$(document).on( "pagecreate", function() {
-$( document ).on( "swiperight", function( e ) {
-			if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
-				if ( e.type === "swiperight" ) {
-					$( ".left-panel" ).panel( "open" );
-				}
-       		 }
-    		});
+				$( document ).on( "swiperight", function( e ) {
+							if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
+								if ( e.type === "swiperight" ) {
+									$( ".left-panel" ).panel( "open" );
+								}
+							 }
+					});
 			});	
 			$(document).ready(function(e) {
-   				 loadcategory();
+   				/* Load Category */
+				 loadcategory();
 			});
         </script>
     </head>
@@ -68,11 +69,39 @@ $( document ).on( "swiperight", function( e ) {
             <hr>
         </div><!-- /panel -->
         
-         <div data-role="footer"  data-theme="a" data-position="fixed">
+         <div data-role="footer" class="footerFixed" data-theme="a" data-position="fixed">
             <a class="ui-btn-left ui-btn-corner-all ui-btn ui-icon-delete ui-btn-icon-notext ui-shadow" title=" Close " data-form="ui-icon" data-role="button" role="button" style="margin:0px;"> Close </a>
             <br>&nbsp;<br>
             <a class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-arrow-r ui-btn-icon-right ui-shadow" title=" Login Now " data-form="ui-icon" href="#shoppage" data-transition="flip" data-role="button" role="button" style="margin:0px;"> Continue </a>
         </div>
-    </div>    
+    </div>  
+   <!-- End of Page -->
+    
+    <!-- Home Products Page -->
+<div data-role="page" id="shopproductpage" data-url="demo-page">
+  <div data-role="header" data-theme="a" data-position="fixed">
+        <h1>Swipe left or right</h1>
+        <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-btn-left ui-btn-corner-all ui-btn ui-icon-bars ui-btn-icon-notext ui-shadow">Open left panel</a>
+        <a href="#" data-icon="carat-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-bars ui-btn-icon-notext ui-shadow">Open right panel</a>
+    </div><!-- /header -->
+    
+        <div class="Ui-customeClass ui-bar ui-bar-a NoPadding" style="padding:1%; background:#FFF;" id="ProductsGrid">
+      
+		</div><!-- /grid-a -->
+    
+    <!-- Menu Panel -->
+    <div data-role="panel" id="left-panel" class="left-panel"  data-display="overlay" data-theme="a">
+        <h4 style="margin:5px;">Nevigation</h4>
+        <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-icon-delete ui-btn-right ui-btn-icon-notext ">Close</a>
+        <hr>
+    </div><!-- /panel -->
+    
+     <div data-role="footer"  class="footerFixed" data-theme="a" data-position="fixed">
+		<a class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-shop ui-btn-icon-right ui-shadow goToshopcart" title=" go to Cart " data-form="ui-icon" data-role="button" role="button" style="margin:0px;" href="#shopproductcart" id="goToshopcart" data-transition="pop"> No Item Selected </a>
+        <a class="ui-btn-bottom ui-btn-corner-all ui-btn ui-icon-arrow-l ui-btn-icon-left ui-shadow" title=" Login Now " data-form="ui-icon" data-role="button" role="button" style="margin:0px;" href="#shoppage" data-transition="flip"> Back </a>
+	</div>
+</div>
+<!-- End of Page -->
+      
   </body>
 </html>

@@ -44,6 +44,7 @@ div.ui-controlgroup-label {
 .productEffect { background:#f6f6f6; padding:0px 5px 0px 8px; border-bottom:1px solid #CFCFCF;}
 .productEffect:hover { background:#f9f9f9; padding:0px 5px 0px 8px; border-bottom:1px solid #CFCFCF;}
 
+.footerFixed { bottom:2px; position:fixed !important; }
 .ui-content { background:#FEFEFE; }
 .Ui-customeClass .ui-input-text { margin:0px !important; }
 .Ui-customeClass .panel100 { width:100% !important; float:left; }
