@@ -11,8 +11,10 @@
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
          <style>
-                @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          @viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
-                @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   @viewport { user-zoom: fixed ; min-zoom: 100% ; }
+                @-ms-viewport { width: 100vw ; min-zoom: 100% ; zoom: 100% ; }          
+				@viewport { width: 100vw ; min-zoom: 100% zoom: 100% ; }
+                @-ms-viewport { user-zoom: fixed ; min-zoom: 100% ; }                   
+				@viewport { user-zoom: fixed ; min-zoom: 100% ; }
               
         </style>
 
@@ -31,7 +33,7 @@
         <script type="application/javascript" src="jqm/jquery.mobile-min.js" data-ver="0"></script>
         <script language="javascript" type="text/javascript">
 			$(document).on( "pagecreate", function() {
-				$( document ).on( "swiperight", function( e ) {
+				$(document).on( "swiperight", function( e ) {
 							if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
 								if ( e.type === "swiperight" ) {
 									$( ".left-panel" ).panel( "open" );
@@ -42,6 +44,10 @@
 			$(document).ready(function(e) {
    				/* Load Category */
 				 loadcategory();
+				 
+				 /* Old Cookies View */
+				 SetGetCookies();
+				 
 			});
         </script>
     </head>
@@ -98,7 +104,7 @@
     
      <div data-role="footer"  class="footerFixed" data-theme="a" data-position="fixed">
 		<a class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-shop ui-btn-icon-right ui-shadow goToshopcart" title=" go to Cart " data-form="ui-icon" data-role="button" role="button" style="margin:0px;" href="#shopproductcart" id="goToshopcart" data-transition="pop"> No Item Selected </a>
-        <a class="ui-btn-bottom ui-btn-corner-all ui-btn ui-icon-arrow-l ui-btn-icon-left ui-shadow" title=" Login Now " data-form="ui-icon" data-role="button" role="button" style="margin:0px;" href="#shoppage" data-transition="flip"> Back </a>
+        <a class="ui-btn-bottom ui-btn-corner-all ui-btn ui-icon-arrow-l ui-btn-icon-left ui-shadow" title=" Login Now " data-form="ui-icon" data-role="button" role="button" style="margin:0px;" href="#Homepage" data-transition="flip"> Back </a>
 	</div>
 </div>
 <!-- End of Page -->

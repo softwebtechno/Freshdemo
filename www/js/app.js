@@ -27,13 +27,13 @@ $( document ).on( "swiperight", function( e ) {
 });
 */
 
-
+var MyFixURL = "http://softwebtechno.com/";
 
 // ...additional event handlers here...
 function testajax(){
     $.ajax({
         type: "POST",
-        url: 'http://softwebtechno.com/getcategory.php',
+        url: MyFixURL+'getcategory.php',
         dataType: 'json',
 		cache:false,
         crossDomain: true,
@@ -52,7 +52,7 @@ function loadcategory(){
 	var Category = ""; 
 	$.ajax({
         type: "POST",
-        url: 'http://softwebtechno.com/getcategory.php',
+        url: MyFixURL+'getcategory.php',
         dataType: 'json',
 		cache:false,
         crossDomain: true,
@@ -84,11 +84,12 @@ function loadcategory(){
 /* For Load Products from Category */
 function LoadProducts(CatId){
 	var Products = "";
+	var CartSession1=localStorage.getItem("CartItems")!==null?localStorage.getItem("CartItems"):"";
 	var i=1;
     $.ajax({
         type: "POST",
-        url: 'http://softwebtechno.com/getproducts.php',
-		data:{catId:CatId},
+        url: MyFixURL+'getproducts.php',
+		data:{catId:CatId,CartSession:CartSession1},
         dataType: 'json',
 		cache:false,
         crossDomain: true,
@@ -100,7 +101,7 @@ function LoadProducts(CatId){
 				 if (response.length > 0)
 				   {
 					  $.each(response, function(index, element) {
-					  Products += '<div class="panel100 productEffect"><div class="panel20"><a href="#DataDynamic" class="ui-bar ui-bar-a NoPadding ImageDiv MyBackground" data-corners="false" title=" Navigation " data-value="'+element["prodid"]+'" role="button"><img src="icon.png" /></a></div><div class="panel55"><a href="#DataDynamic" class="ui-bar ui-bar-a NoPadding NoBorder fontLeft MyBackground" data-corners="false" title=" Navigation " data-value="'+element["prodid"]+'" style="margin-bottom:0px;" role="button"> '+element["proname"]+' </a><a class="ui-bar ui-bar-a NoPadding fontLeft NoBorder MyBackground" style="margin-top:0px;" data-corners="false" title=" Price per Quote " data-value="'+element["price"]+'" role="button" id="cost1'+element["prodid"]+'">Price : Rs. '+element["price"]+'</a></div><div class="panel25"><a class="ui-btn-center ui-btn-corner-all ui-btn panel10 ui-icon-plus ui-btn-icon-notext ui-shadow IncreseQty" title=" Increase Quantity " data-form="ui-icon" data-role="button" role="button" data-transition="pop" data-itemvalue="'+element["prodid"]+'"> + </a><div class="panel10"><a class="ui-bar ui-bar-a NoPadding fontLeft NoBorder MyBackground" style="margin-bottom:0px;" data-corners="false" title=" Quantity " data-value="'+element["prodid"]+'" role="button" id="Count'+element["prodid"]+'">'+element["Qty"]+'</a></div><a class="ui-btn-center ui-btn-corner-all ui-btn panel10 ui-icon-minus ui-btn-icon-notext ui-shadow DecreseQty" title=" Decrease Quantity " data-form="ui-icon" data-role="button" role="button" data-transition="pop"  data-itemvalue="'+element["prodid"]+'"> - </a><div><a class="ui-bar ui-bar-a NoPadding fontLeft NoBorder MyBackground" style="margin-top:0px;" data-corners="false" title=" Price per Quote " data-value="'+element["price"]+'" role="button" id="cost'+element["prodid"]+'"> Rs. '+element["subTotal"]+'</a></div></div></div>';
+					  Products += '<div class="panel100 productEffect"><div class="panel20"><a href="#DataDynamic" class="ui-bar ui-bar-a NoPadding ImageDiv MyBackground" data-corners="false" title=" Navigation " data-value="'+element["prodid"]+'" role="button"><img src="icon.png" /></a></div><div class="panel55"><a href="#DataDynamic" class="ui-bar ui-bar-a NoPadding NoBorder fontLeft MyBackground" data-corners="false" title=" Navigation " data-value="'+element["prodid"]+'" style="margin-bottom:0px;" role="button"> '+element["proname"]+' </a><a class="ui-bar ui-bar-a NoPadding fontLeft NoBorder MyBackground" style="margin-top:0px;" data-corners="false" title=" Price per Quote " data-value="'+element["price"]+'" role="button" id="cost1'+element["prodid"]+'">Price : Rs. '+element["price"]+'</a></div><div class="panel25"><a class="ui-btn-center ui-btn-corner-all ui-btn panel10 ui-icon-plus ui-btn-icon-notext ui-shadow IncreseQty" title=" Increase Quantity " data-form="ui-icon" data-role="button" role="button" data-transition="pop" onclick="AddPlusProduct('+element["prodid"]+',1)" data-itemvalue="'+element["prodid"]+'"> + </a><div class="panel10"><a class="ui-bar ui-bar-a NoPadding fontLeft NoBorder MyBackground" style="margin-bottom:0px;" data-corners="false" title=" Quantity " data-value="'+element["prodid"]+'" role="button" id="Count'+element["prodid"]+'">'+element["Qty"]+'</a></div><a class="ui-btn-center ui-btn-corner-all ui-btn panel10 ui-icon-minus ui-btn-icon-notext ui-shadow DecreseQty" title=" Decrease Quantity " data-form="ui-icon" data-role="button" role="button" data-transition="pop"  data-itemvalue="'+element["prodid"]+'" onclick="AddPlusProduct('+element["prodid"]+',-1)"> - </a><div><a class="ui-bar ui-bar-a NoPadding fontLeft NoBorder MyBackground" style="margin-top:0px;" data-corners="false" title=" Price per Quote " data-value="'+element["price"]+'" role="button" id="cost'+element["prodid"]+'"> Rs. '+element["subTotal"]+'</a></div></div></div>';
 						  i=i+1;
 						  //alert(element["catid"]+" "+element["catname"]);           
 					  });
@@ -111,16 +112,64 @@ function LoadProducts(CatId){
 	});
 }
 
-/*	$.ajax({
-        type:'POST',
-		dataType: 'json',
+/* Add to Cart function */
+function getShopBottomCart(dataitemId,dataprice,dataqty){
+   	var CartSession1=localStorage.getItem("CartItems")!==null?localStorage.getItem("CartItems"):"";
+	var GTotal1=localStorage.getItem("GTotal")!==null?localStorage.getItem("GTotal"):"";
+	var ItemTotal1=localStorage.getItem("TotalItems")!==null?localStorage.getItem("TotalItems"):"";
+    $.ajax({
+        type: "POST",
+       	url: MyFixURL+"addtocart.php",
+		data:{CartSession:CartSession1,GTotal:GTotal1,ItemTotal:ItemTotal1,cartItems:1,itemId:dataitemId,price:dataprice,qty:dataqty},
+        dataType: 'json',
+		cache:false,
         crossDomain: true,
-        url:'http://time.jsontest.com/',
-        error: function(response, d, a){
-            alert(response + d + a) ;  
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('new textStatus=' + textStatus + ' errorThrown=' + errorThrown);
         },
-        success: function (response){
-            alert(JSON.stringify(response));        
-        }
-    });
-*/
+        success: function (d) {
+			//alert(JSON.stringify(d));
+			// Your code.
+				if (d.length > 0)
+				   {
+					  $.each(d,function(index,values){
+						localStorage.setItem("CartItems", values["Cart"]);
+						localStorage.setItem("TotalItems", values["ItemTot"]);
+						localStorage.setItem("GTotal", values["GTotal"]);
+						SetGetCookies();
+						});
+				   }     
+		}
+	});
+}
+
+function AddPlusProduct(ItemId,chngValue)
+{
+			   var Count = $("#Count"+ItemId).html();
+			   var Cost = $("#cost"+ItemId).data("value");
+			   $("#cost"+ItemId).html("Rs. "+(parseFloat(Cost)*(parseFloat(Count)+chngValue)));
+			   $("#Count"+ItemId).html(parseInt(Count)+chngValue);
+			   getShopBottomCart(ItemId,Cost,chngValue);
+			   SetGetCookies();
+}
+
+function SetGetCookies()
+{
+		var cartItems = "";
+		var TotItems = 0;
+		var GtotalP = 0;
+		
+			   if(localStorage.getItem("CartItems")!==null)
+			   {
+				   cartItems = localStorage.getItem("CartItems");
+			   }
+			   if(localStorage.getItem("TotalItems")!==null)
+			   {
+				   TotItems = localStorage.getItem("TotalItems");
+			   }
+			   if(localStorage.getItem("GTotal")!==null)
+			   {
+				   GtotalP = localStorage.getItem("GTotal");
+			   }
+			   $("#goToshopcart").html(TotItems+" Item(s) - Rs. "+GtotalP);  
+}
